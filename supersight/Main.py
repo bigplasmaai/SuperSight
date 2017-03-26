@@ -179,7 +179,21 @@ class Dashboard(object):
         pass
     
     def __get_below_comment_of_the_current_page(self, section, page):
-        pass
+        
+        comments = []
+        structure = [len(x) for x in self.sections[section].pages[page].layout]
+        for key in self.sections[section].pages[page].elements.keys():
+            comments.append(self.sections[section].pages[page].elements[key].comments_below)
+        
+        
+        comments_sub = []
+        for idx, i in enumerate(list(accumulate(structure))):
+            if idx == 0:
+                comments_sub.append(comments[0:i])
+            else :
+                comments_sub.append(comments[list(accumulate(structure))[idx - 1]:i])
+        
+        return comments_sub
             
     def __create_template_vars_index(self):
         """This method will create the dictionnary to be passed
@@ -200,6 +214,7 @@ class Dashboard(object):
         # Get the number of rows and how elements are organised
         template_vars["layout"] = self.__get_layout_of_the_current_page(self.HomeName, "Home")
         template_vars["headings"] = self.__get_headings_of_the_current_page(self.HomeName, "Home")
+        template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(self.HomeName, "Home")
         
         # Plots :
         template_vars["plots"] = self.__get_plots_of_the_current_page(self.HomeName, "Home")
@@ -242,7 +257,7 @@ class Dashboard(object):
         
         
         # Sections
-        template_vars["sections"], template_vars["pages"],            template_vars["pages_len"] = self.__create_lists_for_nav_bar()
+        template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
         
         #Css and JS
@@ -367,7 +382,8 @@ class Element (object):
         pass
     
     def add_comment_below(self, comment):
-        pass
+
+        self.comment_below = comment
     
     def make_element_comment_only(self):
         pass

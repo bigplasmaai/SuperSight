@@ -92,7 +92,7 @@
     
       <!-- Example row of columns -->
       <div class="row">
-        {% for width in layout[outer_loop.index0]%}
+        {% for width in layout[outer_loop.index0] %}
         {% set inner_loop = loop %}
         <div class="col-md-{{ width }}">
           {% if headings[outer_loop.index0][inner_loop.index0] != None %}
@@ -102,8 +102,9 @@
           {% if plots[outer_loop.index0][inner_loop.index0] %}
           <a href="https://www.google.com">
           <img src="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" alt="A nice graph" class="img-fluid mx-auto d-block">
-        </a>
+          </a>
           {% endif %}
+          
         </div>
         {% endfor %}
       </div>
