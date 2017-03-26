@@ -206,7 +206,7 @@ class Dashboard(object):
         template_vars["plots"] = self.__get_plots_of_the_current_page(self.HomeName, "Home")
         
         # Sections
-        template_vars["sections"], template_vars["pages"],            template_vars["pages_len"] = self.__create_lists_for_nav_bar()
+        template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
         
         #Css and JS
