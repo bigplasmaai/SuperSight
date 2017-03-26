@@ -104,7 +104,9 @@
           <img src="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" alt="A nice graph" class="img-fluid mx-auto d-block">
           </a>
           {% endif %}
-          
+          {% if comments_below[outer_loop.index0][inner_loop.index0] %}
+          <p class = "text-center">{{ comments_below[outer_loop.index0][inner_loop.index0] }}</p>
+          {% endif %}
         </div>
         {% endfor %}
       </div>
@@ -113,7 +115,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2017</p>
+        <p>{{ footer }}</p>
       </footer>
     </div> <!-- /container -->
 

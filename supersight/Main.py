@@ -48,6 +48,7 @@ class Dashboard(object):
         methodical and structured manner. It is lightweight, hackable, written in Python and you can host 
         its static output anywhere (local network, AWS S3 ...)."""
         self.nav_bar_right_side = "Custom information here"
+        self.footer = "&copy; SuperSight 2017"
         
         if noHome == False:
             # Add Home Section and Page by default. Add it to the sections dict.
@@ -183,7 +184,7 @@ class Dashboard(object):
         comments = []
         structure = [len(x) for x in self.sections[section].pages[page].layout]
         for key in self.sections[section].pages[page].elements.keys():
-            comments.append(self.sections[section].pages[page].elements[key].comments_below)
+            comments.append(self.sections[section].pages[page].elements[key].comment_below)
         
         
         comments_sub = []
@@ -214,15 +215,18 @@ class Dashboard(object):
         # Get the number of rows and how elements are organised
         template_vars["layout"] = self.__get_layout_of_the_current_page(self.HomeName, "Home")
         template_vars["headings"] = self.__get_headings_of_the_current_page(self.HomeName, "Home")
-        template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(self.HomeName, "Home")
+        
         
         # Plots :
         template_vars["plots"] = self.__get_plots_of_the_current_page(self.HomeName, "Home")
-        
+        template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(self.HomeName, "Home")
+
         # Sections
         template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
-        
+        # footer
+        template_vars["footer"] = self.footer
+
         #Css and JS
         template_vars["bootstrap_min_css"] = "./site/static/css/bootstrap.min.css"
         template_vars["jumbotron_css"] = "./site/static/css/jumbotron.css"
@@ -254,11 +258,13 @@ class Dashboard(object):
         
         # Plots :
         template_vars["plots"] = self.__get_plots_of_the_current_page(section, page)
-        
+        template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(section, page)
         
         # Sections
         template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
+        # footer
+        template_vars["footer"] = self.footer
         
         #Css and JS
         template_vars["bootstrap_min_css"] = "../static/css/bootstrap.min.css"
@@ -367,13 +373,14 @@ class Element (object):
     if Page.layout = [(12), (6, 6), (6, 6)] you can have up to five elements.
     Elements are inserted left to right, up to bottom."""
     
-    def __init__(self, name = "New Element", plot_object = None, heading = None):
+    def __init__(self, name = "New Element", plot_object = None, heading = None, comment_below = None):
         """The ___init___ method offers a way to directly create a plot element.
         To add comments seperate methods will have to be called."""
         self.element_detail = collections.OrderedDict()
         self.name = name
         self.element_detail["name"] = self.name
         self.heading = heading
+        self.comment_below = comment_below
         self.element_detail["heading"] = self.heading
         
         self.plot_object = plot_object
