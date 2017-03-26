@@ -15,6 +15,17 @@ from jinja2 import Environment, FileSystemLoader
 
 
 # In[2]:
+class Plots_gatherer(object):
+    def __init__(self):
+        self.__plot_dict = {}
+        
+    def add_plot(self, name, plot):
+        #perform some checks
+        self.__plot_dict[name] = plot.getvalue()
+        
+    def get_plot(self, name):
+        return self.__plot_dict[name]
+
 
 class PlotObjectType(Exception):
     """A plot object has to be a io.BytesIO object. Super Sight will gather plots/images and save them
@@ -137,7 +148,7 @@ class Dashboard(object):
             
             my_file = open(plot_path, "wb")
             try :
-                my_file.write(buf_temp.getvalue())
+                my_file.write(buf_temp)
             except Exception as e:
                 print (e)
                 print ("In {section} and {page}, an element exists without a valid plot object.".format(section = section, page = page))
@@ -351,10 +362,7 @@ class Element (object):
         self.heading = heading
         self.element_detail["heading"] = self.heading
         
-        if plot_object != None and type(plot_object) != io.BytesIO:
-            raise PlotObjectType("plot_object type has to be io.BytesIO.")
-        else:
-            self.plot_object = plot_object
+        self.plot_object = plot_object
             
     def add_comment_above(self, comment):
         pass
