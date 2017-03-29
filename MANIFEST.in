@@ -1,0 +1,6 @@
+include supersight/default_template/*
+include supersight/default_template/static/*
+include supersight/default_template/static/css/*
+include supersight/default_template/static/js/*
+
+global-exclude .DS_Store
