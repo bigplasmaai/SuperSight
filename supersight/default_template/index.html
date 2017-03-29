@@ -97,8 +97,12 @@
         {% for width in layout[outer_loop.index0] %}
         {% set inner_loop = loop %}
         <div class="col-md-{{ width }}">
-          {% if headings[outer_loop.index0][inner_loop.index0] != None %}
+          {% if headings[outer_loop.index0][inner_loop.index0] %}
           <h2 class = "text-center">{{ headings[outer_loop.index0][inner_loop.index0] }}</h2>
+          {% endif %}
+
+          {% if comments_above[outer_loop.index0][inner_loop.index0] %}
+          <p class = "text-center">{{ comments_above[outer_loop.index0][inner_loop.index0] }}</p>
           {% endif %}
 
           {% if plots[outer_loop.index0][inner_loop.index0] %}
@@ -106,9 +110,11 @@
           <img src="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" alt="A nice graph" class="img-fluid mx-auto d-block">
           </a>
           {% endif %}
+
           {% if comments_below[outer_loop.index0][inner_loop.index0] %}
           <p class = "text-center">{{ comments_below[outer_loop.index0][inner_loop.index0] }}</p>
           {% endif %}
+
         </div>
         {% endfor %}
       </div>

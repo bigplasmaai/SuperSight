@@ -144,16 +144,20 @@ class Dashboard(object):
             print(section, page, key) # debug print
             
             buf_temp = self.sections[section].pages[page].elements[key].plot_object
-            plot_path = os.path.join(output_path, "output", self.name, "site", section, key + ".svg")
-            
-            my_file = open(plot_path, "wb")
-            try :
-                my_file.write(buf_temp)
-            except Exception as e:
-                print (e)
-                print ("In {section} and {page}, an element exists without a valid plot object.".format(section = section, page = page))
+            if buf_temp is not None :
 
-            my_file.close()
+                plot_path = os.path.join(output_path, "output", self.name, "site", section, key + ".svg")
+                
+                
+                try :
+                    my_file = open(plot_path, "wb")
+                    my_file.write(buf_temp)
+                    my_file.close()
+                except Exception as e:
+                    print (e)
+                    print ("In {section} and {page}, an element exists without a valid plot object.".format(section = section, page = page))
+
+            
             
         
     def __get_plots_of_the_current_page(self, section, page):
@@ -177,7 +181,20 @@ class Dashboard(object):
         return plots_sub
     
     def __get_above_comment_of_the_current_page(self, section, page):
-        pass
+        comments = []
+        structure = [len(x) for x in self.sections[section].pages[page].layout]
+        for key in self.sections[section].pages[page].elements.keys():
+            comments.append(self.sections[section].pages[page].elements[key].comment_above)
+        
+        
+        comments_sub = []
+        for idx, i in enumerate(list(accumulate(structure))):
+            if idx == 0:
+                comments_sub.append(comments[0:i])
+            else :
+                comments_sub.append(comments[list(accumulate(structure))[idx - 1]:i])
+        
+        return comments_sub
     
     def __get_below_comment_of_the_current_page(self, section, page):
         
@@ -220,7 +237,7 @@ class Dashboard(object):
         # Plots :
         template_vars["plots"] = self.__get_plots_of_the_current_page(self.HomeName, "Home")
         template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(self.HomeName, "Home")
-
+        template_vars["comments_above"] = self.__get_above_comment_of_the_current_page(self.HomeName, "Home")
         # Sections
         template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
@@ -259,13 +276,14 @@ class Dashboard(object):
         # Plots :
         template_vars["plots"] = self.__get_plots_of_the_current_page(section, page)
         template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(section, page)
-        
+        template_vars["comments_above"] = self.__get_above_comment_of_the_current_page(section, page)
+
         # Sections
         template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
         # footer
         template_vars["footer"] = self.footer
-        
+
         #Css and JS
         template_vars["bootstrap_min_css"] = "../static/css/bootstrap.min.css"
         template_vars["jumbotron_css"] = "../static/css/jumbotron.css"
@@ -363,31 +381,40 @@ class Page (object):
         self.layout = [(6, 6), (6, 6), (6, 6)]
         self.elements = collections.OrderedDict()
     
-    def add_element(self, name, plot_object = None, heading = None):
-        self.elements[name] = Element(name, plot_object, heading)
+    def add_element(self, name, plot_object = None, heading = None, comment_below = None, comment_above = None):
+        self.elements[name] = Element(name, plot_object, heading, comment_below, comment_above)
 
 class Element (object):
     """Elements are displayed on a page. Theoretically, the number of elements on a page
     should be equal to the number of Bootstrap containers on a page.
     Example : if Page.layout = [(6, 6), (6, 6), (6, 6)], you can have up to six elements.
-    if Page.layout = [(12), (6, 6), (6, 6)] you can have up to five elements.
+    if Page.layout = [(12,), (6, 6), (6, 6)] you can have up to five elements.
     Elements are inserted left to right, up to bottom."""
     
-    def __init__(self, name = "New Element", plot_object = None, heading = None, comment_below = None):
+    def __init__(self, name = "New Element", plot_object = None, heading = None, comment_below = None, comment_above = None):
         """The ___init___ method offers a way to directly create a plot element.
         To add comments seperate methods will have to be called."""
-        self.element_detail = collections.OrderedDict()
+        #self.element_detail = collections.OrderedDict()
         self.name = name
-        self.element_detail["name"] = self.name
+        #self.element_detail["name"] = self.name
         self.heading = heading
+
         self.comment_below = comment_below
-        self.element_detail["heading"] = self.heading
+        self.comment_above = comment_above
+
+        #self.element_detail["heading"] = self.heading
         
         self.plot_object = plot_object
-            
+
+    def add_plot(self, plot_object):
+        self.plot = plot_object
+
     def add_comment_above(self, comment):
-        pass
+        self.comment_above = comment
     
+    def add_heading(self, heading):
+        self.heading = heading
+
     def add_comment_below(self, comment):
 
         self.comment_below = comment
