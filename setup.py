@@ -18,6 +18,9 @@ setup(
     author_email='camille.moatti@gmail.com',
     url='https://github.com/CamilleMo/SuperSight',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs')),
+    install_requires=[
+        "Jinja2",
+    ],
 )
 
