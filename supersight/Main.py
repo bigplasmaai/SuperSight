@@ -168,7 +168,10 @@ class Dashboard(object):
         plots = []
         structure = [len(x) for x in self.sections[section].pages[page].layout]
         for key in self.sections[section].pages[page].elements.keys():
-            plots.append(self.sections[section].pages[page].elements[key].name)
+            if self.sections[section].pages[page].elements[key].plot_object is None:
+                plots.append(None)
+            else:
+                plots.append(self.sections[section].pages[page].elements[key].name)
 
 
         plots_sub = []
