@@ -7,7 +7,6 @@ import os
 import shutil
 import collections
 
-import matplotlib.pyplot as plt
 from itertools import accumulate
 
 from jinja2 import Environment, FileSystemLoader
