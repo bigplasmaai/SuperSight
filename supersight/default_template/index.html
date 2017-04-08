@@ -106,7 +106,7 @@
           {% endif %}
 
           {% if plots[outer_loop.index0][inner_loop.index0] %}
-          <a href="https://www.google.com" class ="no-reformat">
+          <a href="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" class ="no-reformat">
           <img src="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" alt="A nice graph" class="img-fluid mx-auto d-block">
           </a>
           {% endif %}
