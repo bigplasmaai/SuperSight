@@ -11,7 +11,10 @@ from itertools import accumulate
 
 from jinja2 import Environment, FileSystemLoader
 
-
+try :
+    import pandas as pd
+except :
+    pass
 
 class Plots_gatherer(object):
     def __init__(self):
@@ -214,6 +217,23 @@ class Dashboard(object):
                 comments_sub.append(comments[list(accumulate(structure))[idx - 1]:i])
         
         return comments_sub
+
+    def __get_table_of_the_current_page(self, section, page):
+        
+        table = []
+        structure = [len(x) for x in self.sections[section].pages[page].layout]
+        for key in self.sections[section].pages[page].elements.keys():
+            table.append(self.sections[section].pages[page].elements[key].table)
+        
+        
+        tables_sub = []
+        for idx, i in enumerate(list(accumulate(structure))):
+            if idx == 0:
+                tables_sub.append(table[0:i])
+            else :
+                tables_sub.append(table[list(accumulate(structure))[idx - 1]:i])
+        
+        return tables_sub
             
     def __create_template_vars_index(self):
         """This method will create the dictionnary to be passed
@@ -236,10 +256,12 @@ class Dashboard(object):
         template_vars["headings"] = self.__get_headings_of_the_current_page(self.HomeName, "Home")
         
         
-        # Plots :
+        # Plots, comments and table :
         template_vars["plots"] = self.__get_plots_of_the_current_page(self.HomeName, "Home")
         template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(self.HomeName, "Home")
         template_vars["comments_above"] = self.__get_above_comment_of_the_current_page(self.HomeName, "Home")
+        template_vars["tables"] = self.__get_table_of_the_current_page(self.HomeName, "Home")
+
         # Sections
         template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
 
@@ -275,10 +297,11 @@ class Dashboard(object):
         template_vars["layout"] = self.__get_layout_of_the_current_page(section, page)
         template_vars["headings"] = self.__get_headings_of_the_current_page(section, page)
         
-        # Plots :
+        # Plots, comments and table :
         template_vars["plots"] = self.__get_plots_of_the_current_page(section, page)
         template_vars["comments_below"] = self.__get_below_comment_of_the_current_page(section, page)
         template_vars["comments_above"] = self.__get_above_comment_of_the_current_page(section, page)
+        template_vars["tables"] = self.__get_table_of_the_current_page(section, page)
 
         # Sections
         template_vars["sections"], template_vars["pages"], template_vars["pages_len"] = self.__create_lists_for_nav_bar()
@@ -403,10 +426,9 @@ class Element (object):
 
         self.comment_below = comment_below
         self.comment_above = comment_above
-
-        #self.element_detail["heading"] = self.heading
         
         self.plot_object = plot_object
+        self.table = None
 
     def add_plot(self, plot_object):
         self.plot = plot_object
@@ -421,5 +443,11 @@ class Element (object):
 
         self.comment_below = comment
     
-    def make_element_comment_only(self):
-        pass
+    def add_table(self, dataframe):
+        """This method stores plain html string."""
+
+        table_string = dataframe.to_html(classes="table table-sm table-hover")
+        table_string = table_string.replace("\n", "").replace("<thead>", """<thead class="thead-inverse">""")
+        self.table = table_string
+
+

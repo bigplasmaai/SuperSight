@@ -111,6 +111,10 @@
           </a>
           {% endif %}
 
+          {% if tables[outer_loop.index0][inner_loop.index0] %}
+          {{ tables[outer_loop.index0][inner_loop.index0] }}
+          {% endif %}
+
           {% if comments_below[outer_loop.index0][inner_loop.index0] %}
           <p class = "text-center">{{ comments_below[outer_loop.index0][inner_loop.index0] }}</p>
           {% endif %}
