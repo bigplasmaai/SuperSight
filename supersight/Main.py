@@ -32,6 +32,10 @@ class PlotObjectType(Exception):
     """A plot object has to be a io.BytesIO object. Super Sight will gather plots/images and save them
     in dedicated folders when the dashboard is rendered."""
 
+class BootstrapLayout(Exception):
+    """Each tuple in the layout of a page should have a sum equal to 12. It is a requirement to comply with
+    Bootstrap's grid system"""
+
 class Dashboard(object):
     """The Dashboard is the main object. It represents the website at the highest level.
     the add_section method will add a section to the navbar of this dashboard."""
@@ -373,6 +377,12 @@ class Dashboard(object):
             for page in section:
                 section_name = list(self.sections.keys())
                 print("Starting individual page :", section_name[idx+1], page)
+
+                # Check the layout comply to Bootstrap == 12 :
+                lay = self.sections[section_name[idx+1]].pages[page].layout
+                for i in lay:
+                    if sum(i) != 12: raise BootstrapLayout ("Each tuple in the layout of a page should have a sum equal to 12.")
+
                 self.template_vars = self.__create_template_vars(section_name[idx+1], page)
                 self.__render_page(section_name[idx+1], page, self.template_vars, output_path)
                 
