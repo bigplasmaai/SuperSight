@@ -7,3 +7,9 @@ A few months ago I set up a data pipeline within the AWS ecosystem. The final st
 # Install
 
 `pip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz`
+
+# Quickstart
+
+Check the live demo [here](http://supersight-demo.s3-website.eu-central-1.amazonaws.com/index.html).
+
+Check the notebook used to generate this demo [here](https://nbviewer.jupyter.org/github/CamilleMo/SuperSight/blob/master/SuperSight_Intro.ipynb)
