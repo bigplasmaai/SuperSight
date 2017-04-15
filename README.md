@@ -19,4 +19,4 @@ Check the notebook used to generate this demo [here](https://nbviewer.jupyter.or
 Everything you see in the demo can easily be overridden to let you build a white-labeled website.  
 You can also build your own template starting from the plain vanilla Bootstrap 4 included by default.  
   
-MathJax.js and Gutenberg CSS are included by default via CDN. You can also remove these librairies and add librairies you may need using a custom template.
+MathJax.js and Gutenberg CSS are included by default via CDN. You can also remove these libraries and add libraries you may need using a custom template.
