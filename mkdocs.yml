@@ -1,5 +1,8 @@
-site_name: Sample Module Docs
+site_name: SuperSight Docs
 pages:
     - Home: index.md
-    - About: about.md
-theme: yeti
+    - Installation: Installation.md
+    - Quickstart: Quickstart.md
+    - Usage: Usage.md
+    - Changelog: Changelog.md
+theme: readthedocs
