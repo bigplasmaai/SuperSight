@@ -106,7 +106,7 @@
           {% endif %}
 
           {% if plots[outer_loop.index0][inner_loop.index0] %}
-          <a href="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" class ="no-reformat">
+          <a href="#" class ="no-reformat">
           <img src="{{ address_prefix }}/{{ current_section }}/{{ plots[outer_loop.index0][inner_loop.index0] }}.svg" alt="A nice graph" class="img-fluid mx-auto d-block">
           </a>
           {% endif %}
@@ -126,9 +126,29 @@
       </div>
       <hr>
 
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ name }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          </div>
+          <div class="modal-body">
+          <img src="#" alt="A nice graph" class="img-fluid mx-auto d-block" id = "my-image">
+          
+          </div>
+          <div class="modal-footer">
+            
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+          </div>  
+        </div>
+      </div>
+
       <div class ="no-print">
         <footer>
           <p>{{ footer }}</p>
+          <button id="modButton" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
         </footer>
       </div>
     </div> <!-- /container -->
@@ -149,6 +169,17 @@
     </script>
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script>
+      $(document).ready(function(){
+          $('#modButton').hide()
+          $(".no-reformat").click(function(){
+              var cat =  $(this).children("img").attr("src");
+              $(".modal-body").children("img").attr("src", cat)
+              $('#modButton').trigger('click');
+              
+          });
+      });
     </script>
   </body>
 </html>
