@@ -11,7 +11,7 @@ with open('LICENSE') as f:
 
 setup(
     name='supersight',
-    version='v.0.2.1-alpha',
+    version='0.2.2',
     description='A static website generator for MatplotLib plots',
     long_description=readme,
     author='Camille Moatti',

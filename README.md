@@ -9,6 +9,7 @@ A few months ago I set up a data pipeline within the AWS ecosystem. The final st
 
 # Install
 
+`pip install supersight`
 `pip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz`
 
 # Quickstart
