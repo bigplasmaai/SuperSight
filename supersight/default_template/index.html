@@ -139,7 +139,7 @@
           </div>
           <div class="modal-footer">
             
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            
           </div>
           </div>  
         </div>
@@ -148,7 +148,7 @@
       <div class ="no-print">
         <footer>
           <p>{{ footer }}</p>
-          <button id="modButton" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+          
         </footer>
       </div>
     </div> <!-- /container -->
@@ -172,10 +172,24 @@
     </script>
     <script>
       $(document).ready(function(){
-          $('#modButton').hide()
+          
           $(".no-reformat").click(function(){
               var cat =  $(this).children("img").attr("src");
               $(".modal-body").children("img").attr("src", cat)
+
+              var newButton = document.createElement('button');
+              newButton.id = "modButton";
+              newButton.className = ("btn btn-primary element-to-hide");
+              newButton.setAttribute("data-toggle", "modal");
+              newButton.setAttribute("data-target", ".bd-example-modal-lg");
+              newButton.innerHTML = "Large modal";
+
+              document.getElementById('theFooter').appendChild(newButton);
+
+              $('.element-to-hide').each(function(){
+                $(this).hide();
+              });
+
               $('#modButton').trigger('click');
               
           });
