@@ -11,7 +11,7 @@ with open('LICENSE') as f:
 
 setup(
     name='supersight',
-    version='0.2.3',
+    version='0.2.4',
     description='A static website generator for MatplotLib plots',
     long_description=readme,
     author='Camille Moatti',
@@ -22,5 +22,6 @@ setup(
     install_requires=[
         "Jinja2",
     ],
+    include_package_data = True
 )
 
