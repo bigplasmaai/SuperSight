@@ -10,7 +10,7 @@ A few months ago I set up a data pipeline within the AWS ecosystem. The final st
 # Install
 
 `pip install supersight`  
-`pip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz`
+Or clone the supersight folder and import it directly in your script(Jinja2 has to be installed).
 
 # Quickstart
 
