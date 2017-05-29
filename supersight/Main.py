@@ -453,11 +453,15 @@ class Element (object):
 
         self.comment_below = comment
     
-    def add_table(self, dataframe):
+    def add_table(self, dataframe, isStyled = False):
         """This method stores plain html string."""
 
-        table_string = dataframe.to_html(classes="table table-sm table-hover")
-        table_string = table_string.replace("\n", "").replace("<thead>", """<thead class="thead-inverse">""")
+        if isStyled :
+            table_string = dataframe.render()
+        else :
+            table_string = dataframe.style.render()
+            
+        table_string = table_string.replace("\n", "").replace("<table", """<table class = "table table-sm table-hover" """).replace("<thead>", """<thead class="thead-inverse">""")
         self.table = table_string
 
 
