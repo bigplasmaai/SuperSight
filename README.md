@@ -1,5 +1,6 @@
 ![Python 3.5](https://img.shields.io/badge/Python-3.5-blue.svg)
 ![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)
+[![Build Status](https://travis-ci.org/CamilleMo/SuperSight.svg?branch=master)](https://travis-ci.org/CamilleMo/SuperSight)
 
 ![logo](https://s3.eu-central-1.amazonaws.com/camo-bucket/logo_small.svg)
 
