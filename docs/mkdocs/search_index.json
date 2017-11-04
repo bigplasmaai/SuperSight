@@ -27,12 +27,12 @@
         },
         {
             "location": "/Installation/index.html",
-            "text": "Installation\n\n\nCurrently, the repo is hosted on AWS :\n\n\npip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz\n\n\nIt will be available on PyPI soon.",
+            "text": "Installation\n\n\nSuperSight is available on PyPI :\n\n\npip install supersight",
             "title": "Installation"
         },
         {
             "location": "/Installation/index.html#installation",
-            "text": "Currently, the repo is hosted on AWS :  pip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz  It will be available on PyPI soon.",
+            "text": "SuperSight is available on PyPI :  pip install supersight",
             "title": "Installation"
         },
         {
