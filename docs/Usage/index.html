@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Usage - SuperSight Docs</title>
+
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../index.html">SuperSight Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../Installation/index.html">Installation</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../Quickstart/index.html">Quickstart</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="index.html">Usage</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../Changelog/index.html">Changelog</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../Quickstart/index.html">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../Changelog/index.html">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="first-level active"><a href="#usage">Usage</a></li>
+        
+            <li class="second-level"><a href="#api-usage">API usage</a></li>
+            
+                <li class="third-level"><a href="#the-plot_gatherer-object">The Plot_gatherer object</a></li>
+            
+                <li class="third-level"><a href="#the-dashboard-object">The Dashboard object</a></li>
+            
+        
+            <li class="second-level"><a href="#customization">Customization</a></li>
+            
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="usage">Usage</h1>
+<h2 id="api-usage">API usage</h2>
+<h3 id="the-plot_gatherer-object">The Plot_gatherer object</h3>
+<p>SuperSight collects plots and, at render time, it saves these in dedicated folders.
+To make this process easier, SuperSight comes with a Plot_gatherer object :</p>
+<pre><code class="Python">from supersight import Plots_gatherer
+plots = Plots_gatherer()
+</code></pre>
+
+<p>Once the user has instanciated this object, he can use it to save plots for later use using the <code>add_plot</code> method:</p>
+<pre><code class="Python">import matplotlib.pyplot as plt
+
+graph = plt.figure()
+x = np.linspace(0, 10, 30)
+y = np.sin(x)
+plt.plot(x, y, 'o', color='black');
+
+buf = io.BytesIO()
+plt.savefig(buf, format='svg')
+plots.add_plot(&quot;first graph&quot;, buf)
+</code></pre>
+
+<p>The three last lines above are necessary to save the plot. A Plot_gatherer instance behaves like a dictionnary. On the last line our plot is assigned to a name (<code>"first graph"</code>in this case).</p>
+<p>Hence two plots cannot have the same name.<br />
+Users can save as many plots as they want the limitation being the memory.</p>
+<h3 id="the-dashboard-object">The Dashboard object</h3>
+<h4 id="instanciation">Instanciation</h4>
+<p>The Dashboard object represents the highest level of the report. It is the container of all other objects.  </p>
+<p>Other objects are :</p>
+<ul>
+<li>Sections which appear in the navbar. They contain pages</li>
+<li>Pages which appear in a dropdown when a section is clicked</li>
+<li>Elements (plots and data tables) which are displayed on a page according to the Bootstrap grid system.</li>
+</ul>
+<p>Below a Dashboard object is instanciated as ds :</p>
+<pre><code class="Python">from supersight import Dashboard
+ds = Dashboard()
+</code></pre>
+
+<p>Currently, you should instanciate this object without any parameters. In the future, it will be possible to change some default behaviors though.<br />
+Next, some attributes should be changed to get rid of default values. Below is an extract of the module :</p>
+<pre><code class="Python">self.name = &quot;New Dashboard&quot;
+self.title = &quot;Super Sight is self hostable dashboard to properly report your work&quot;
+self.display = &quot;Welcome to &lt;b&gt;Super Sight !&lt;/b&gt;&quot;
+self.display_message = &quot;&quot;&quot;Super Sight generates a multipage dashboard from a Matplotlib 
+plots collection. It helps data scientists and business analysts reporting their work in a 
+methodical and structured manner. It is lightweight, hackable, written in Python and you can host 
+its static output anywhere (local network, AWS S3 ...).&quot;&quot;&quot;
+self.nav_bar_right_side = &quot;Custom information here&quot;
+self.footer = &quot;&amp;copy; SuperSight 2017
+</code></pre>
+
+<p>Hence users can do :</p>
+<pre><code class="Python">ds.name = &quot;custom name&quot; 
+ds.title = &quot;custom sentence to be used as title&quot;
+ds.display = &quot;Big Display&quot;
+...
+</code></pre>
+
+<h4 id="sections">Sections</h4>
+<p>Users will then attach sections to compose the minisite.<br />
+<strong>Currently, the Home Page is created by default. There is not any way to remove it.</strong>
+<code>ds.sections["Home"].pages["Home"]</code> exists by default.  </p>
+<p><strong>To add sections</strong>, the API follows this syntax :
+<code>ds.add_section("Section 1")</code> A section can have any name.<br />
+Applying the <code>add_section</code> method to a Dashboard instance will create a new section.</p>
+<h4 id="pages">Pages</h4>
+<p><strong>To add a page</strong> to a given section, the API is similar :
+<code>ds.sections["x"].add_page("y")</code> Here the <code>add_page</code> method is used. A page can also have any name.
+To add a second page to this same section : <code>ds.sections["x"].add_page("z")</code></p>
+<p><strong>Special Case : </strong><br />
+Users can decide to make a single-page section. In this case, SuperSight require to name the page <code>Page 1</code>:
+<code>ds.sections["Section 1"].add_page("Page 1")</code> In this particular case <code>"Page 1"</code> is invisible since no dropdown is displayed for this section.</p>
+<h4 id="plots">Plots</h4>
+<p>To populate pages with plots and data tables, a similar API is used. 
+To add a plot already saved in the plot gatherer :  </p>
+<pre><code class="Python">ds.sections[&quot;x&quot;].pages[&quot;z&quot;].add_element(name = &quot;plot 1&quot;, 
+                                        plot_object = plots.get_plot(&quot;saved plot&quot;))
+</code></pre>
+
+<p>We just added a plot to the page z in the section x.  </p>
+<p>It is worth noting that a name is specified for an element. This name will be used to save a file in the folder dedicated to the section x.<br />
+<strong>Hence, two plots cannot have the same name within the same section even though they are displayed on two different pages. Sections isolate completely elements because files are are stored in different folders while pages divide elements only in the HTML output</strong>.  </p>
+<h4 id="data-tables">Data Tables</h4>
+<p>To add a data table, the following method should be used :</p>
+<pre><code class="Python">ds.sections[&quot;x&quot;].pages[&quot;z&quot;].add_element(name = &quot;pivot table&quot;)
+ds.sections[&quot;x&quot;].pages[&quot;z&quot;].elements[&quot;pivot table&quot;].add_table(df2)
+</code></pre>
+
+<p>Currently, to add a data table, a second line is necessary. df2 is a Pandas.Dataframe object. </p>
+<h4 id="page-layout">Page Layout</h4>
+<p>I users wish to change how plots and data tables are displayed on a page, they can modify the layout thanks to this command :  </p>
+<pre><code class="Python">ds.sections[&quot;x&quot;].pages[&quot;z&quot;].layout = [(8, 4), (6,6), (12,), (12,)]
+</code></pre>
+
+<p>the layout parameter wait a list of tuples. Each tuple reprensents one line. The length of the tuple is the number of elements on the row.
+According to Bootstrap grid system, a line should be equal to twelve. In SuperSight, the default layout is :<br />
+<code>[(6, 6), (6, 6), (6, 6)]</code>  </p>
+<h4 id="headings-and-comments">Headings and Comments</h4>
+<p>To enrich a plot or a data table, SuperSight allows to add Headings and Comments.
+Users could specify Headings and Comments within the <code>add_element</code> method :  </p>
+<pre><code class="Python">ds.sections[&quot;x&quot;].pages[&quot;z&quot;].add_element(name = &quot;info&quot;, heading = &quot;Heading&quot;, 
+                                        plot_object = plots.get_plot(&quot;saved plot&quot;),  
+                                        comment_below = &quot;A comment below the element&quot;, 
+                                        comment_above = &quot;A comment above the element&quot;)
+</code></pre>
+
+<p>Users could also add comments after an element is added via these methods :  </p>
+<pre><code class="Python">ds.sections[&quot;x&quot;].pages[&quot;z&quot;].elements[&quot;info&quot;].add_comment_above(&quot;A comment below the element&quot;)
+ds.sections[&quot;x&quot;].pages[&quot;z&quot;].elements[&quot;info&quot;].add_comment_below(&quot;A comment above the element&quot;)
+ds.sections[&quot;x&quot;].pages[&quot;z&quot;].elements[&quot;info&quot;].add_heading(&quot;Heading&quot;)
+</code></pre>
+
+<p>Finally, it is possible to display math in comments using MathJax :  </p>
+<pre><code class="Python">com = &quot;&quot;&quot;You can also use MathJax : $x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$&quot;&quot;&quot;
+ds.sections[&quot;x&quot;].pages[&quot;z&quot;].elements[&quot;info&quot;].add_comment_below(com)
+</code></pre>
+
+<p>The mathematical expression is surrounded by <code>$</code>.</p>
+<h4 id="the-render-method">The render method</h4>
+<p>To generate the output, call the <code>render</code> method on the Dashboard object :<br />
+<code>ds.render()</code></p>
+<h2 id="customization">Customization</h2>
+<p>To customize the template, users can clone the template folder <a href="https://github.com/CamilleMo/SuperSight/tree/master/supersight/default_template">here</a>, and make changes in <code>index.html</code> or in CSS files. Once the template is customized, call the <code>render method</code> specifying the path of the new template folder :<br />
+<code>ds.render(template='customized_template')</code><br />
+Here the complete folder <code>'customized_template'</code> is in the current directory.</p></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '..';
+    </script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,129 @@
+{
+    "docs": [
+        {
+            "location": "/index.html",
+            "text": "Introduction\n\n\nWhat is SuperSight ?\n\n\nSuperSight is made to display Matplotlib plots and Pandas data tables within a static HTML report. This report (we could also call it a website) is composed of several sections which can be used to organize topics and subjects.\n\n\nEach section can contain one or several pages.\nThese pages will then contain plots and data tables.  Both are elements of the page. You can enrich elements with headings, comments and math equations.\n\n\nBelow is a simplified view of \nan example\n of the output :\n\n\nReport\n|\n|---Section 1\n|     |---Page 1\n|     |---Page 2\n|\n|---Section 2\n|     |---Page 1\n|     |---Page 2\n|           |---Plot 1\n|           |---Plot 2 (with one below comment)\n|           |---Data Table 1\n|           |---Plot 3 (with one headings)\n\n\n\n\nFeatures\n\n\n\n\nStatic output (folders and files) hence no need of a web server to host it\n\n\nGenerates a tree of folders according to your sections (one folder by section).\n\n\nMulti sections/pages to allow analysts to structure their ideas\n\n\nNatively works with Matplotlib and Pandas\n\n\nPlots are saved as files in dedicated section folder\n\n\nPossibility to insert external SVGs (for compagnies logos ...)\n\n\nHTML template built on the top of Bootstrap 4 hence easily customizable\n\n\nPossibility to choose a custom theme/template at render time\n\n\n\n\nUse Case\n\n\nSuperSight can be used as the final step of your data analysis. It allows, for instance, to convert your notebook in a sharable report. You will be able to easily add logic through sections/pages, customize the layout and hide the code to report your work to a larger audience.",
+            "title": "Home"
+        },
+        {
+            "location": "/index.html#introduction",
+            "text": "",
+            "title": "Introduction"
+        },
+        {
+            "location": "/index.html#what-is-supersight",
+            "text": "SuperSight is made to display Matplotlib plots and Pandas data tables within a static HTML report. This report (we could also call it a website) is composed of several sections which can be used to organize topics and subjects.  Each section can contain one or several pages.\nThese pages will then contain plots and data tables.  Both are elements of the page. You can enrich elements with headings, comments and math equations.  Below is a simplified view of  an example  of the output :  Report\n|\n|---Section 1\n|     |---Page 1\n|     |---Page 2\n|\n|---Section 2\n|     |---Page 1\n|     |---Page 2\n|           |---Plot 1\n|           |---Plot 2 (with one below comment)\n|           |---Data Table 1\n|           |---Plot 3 (with one headings)",
+            "title": "What is SuperSight ?"
+        },
+        {
+            "location": "/index.html#features",
+            "text": "Static output (folders and files) hence no need of a web server to host it  Generates a tree of folders according to your sections (one folder by section).  Multi sections/pages to allow analysts to structure their ideas  Natively works with Matplotlib and Pandas  Plots are saved as files in dedicated section folder  Possibility to insert external SVGs (for compagnies logos ...)  HTML template built on the top of Bootstrap 4 hence easily customizable  Possibility to choose a custom theme/template at render time",
+            "title": "Features"
+        },
+        {
+            "location": "/index.html#use-case",
+            "text": "SuperSight can be used as the final step of your data analysis. It allows, for instance, to convert your notebook in a sharable report. You will be able to easily add logic through sections/pages, customize the layout and hide the code to report your work to a larger audience.",
+            "title": "Use Case"
+        },
+        {
+            "location": "/Installation/index.html",
+            "text": "Installation\n\n\nCurrently, the repo is hosted on AWS :\n\n\npip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz\n\n\nIt will be available on PyPI soon.",
+            "title": "Installation"
+        },
+        {
+            "location": "/Installation/index.html#installation",
+            "text": "Currently, the repo is hosted on AWS :  pip install https://s3.eu-central-1.amazonaws.com/releases-55/supersight/dist/supersight-latest.tar.gz  It will be available on PyPI soon.",
+            "title": "Installation"
+        },
+        {
+            "location": "/Quickstart/index.html",
+            "text": "QuickStart\n\n\nInstall SuperSight with pip (see above).\n\n\nCheck the live demo \nhere\n\n\nCheck the notebook used to generate this demo \nhere\n\nThis notebook shows basic API usage.",
+            "title": "Quickstart"
+        },
+        {
+            "location": "/Quickstart/index.html#quickstart",
+            "text": "Install SuperSight with pip (see above).  Check the live demo  here  Check the notebook used to generate this demo  here \nThis notebook shows basic API usage.",
+            "title": "QuickStart"
+        },
+        {
+            "location": "/Usage/index.html",
+            "text": "Usage\n\n\nAPI usage\n\n\nThe Plot_gatherer object\n\n\nSuperSight collects plots and, at render time, it saves these in dedicated folders.\nTo make this process easier, SuperSight comes with a Plot_gatherer object :\n\n\nfrom supersight import Plots_gatherer\nplots = Plots_gatherer()\n\n\n\n\nOnce the user has instanciated this object, he can use it to save plots for later use using the \nadd_plot\n method:\n\n\nimport matplotlib.pyplot as plt\n\ngraph = plt.figure()\nx = np.linspace(0, 10, 30)\ny = np.sin(x)\nplt.plot(x, y, 'o', color='black');\n\nbuf = io.BytesIO()\nplt.savefig(buf, format='svg')\nplots.add_plot(\"first graph\", buf)\n\n\n\n\nThe three last lines above are necessary to save the plot. A Plot_gatherer instance behaves like a dictionnary. On the last line our plot is assigned to a name (\n\"first graph\"\nin this case).\n\n\nHence two plots cannot have the same name.\n\nUsers can save as many plots as they want the limitation being the memory.\n\n\nThe Dashboard object\n\n\nInstanciation\n\n\nThe Dashboard object represents the highest level of the report. It is the container of all other objects.  \n\n\nOther objects are :\n\n\n\n\nSections which appear in the navbar. They contain pages\n\n\nPages which appear in a dropdown when a section is clicked\n\n\nElements (plots and data tables) which are displayed on a page according to the Bootstrap grid system.\n\n\n\n\nBelow a Dashboard object is instanciated as ds :\n\n\nfrom supersight import Dashboard\nds = Dashboard()\n\n\n\n\nCurrently, you should instanciate this object without any parameters. In the future, it will be possible to change some default behaviors though.\n\nNext, some attributes should be changed to get rid of default values. Below is an extract of the module :\n\n\nself.name = \"New Dashboard\"\nself.title = \"Super Sight is self hostable dashboard to properly report your work\"\nself.display = \"Welcome to <b>Super Sight !</b>\"\nself.display_message = \"\"\"Super Sight generates a multipage dashboard from a Matplotlib \nplots collection. It helps data scientists and business analysts reporting their work in a \nmethodical and structured manner. It is lightweight, hackable, written in Python and you can host \nits static output anywhere (local network, AWS S3 ...).\"\"\"\nself.nav_bar_right_side = \"Custom information here\"\nself.footer = \"&copy; SuperSight 2017\n\n\n\n\nHence users can do :\n\n\nds.name = \"custom name\" \nds.title = \"custom sentence to be used as title\"\nds.display = \"Big Display\"\n...\n\n\n\n\nSections\n\n\nUsers will then attach sections to compose the minisite.\n\n\nCurrently, the Home Page is created by default. There is not any way to remove it.\n\n\nds.sections[\"Home\"].pages[\"Home\"]\n exists by default.  \n\n\nTo add sections\n, the API follows this syntax :\n\nds.add_section(\"Section 1\")\n A section can have any name.\n\nApplying the \nadd_section\n method to a Dashboard instance will create a new section.\n\n\nPages\n\n\nTo add a page\n to a given section, the API is similar :\n\nds.sections[\"x\"].add_page(\"y\")\n Here the \nadd_page\n method is used. A page can also have any name.\nTo add a second page to this same section : \nds.sections[\"x\"].add_page(\"z\")\n\n\nSpecial Case : \n\nUsers can decide to make a single-page section. In this case, SuperSight require to name the page \nPage 1\n:\n\nds.sections[\"Section 1\"].add_page(\"Page 1\")\n In this particular case \n\"Page 1\"\n is invisible since no dropdown is displayed for this section.\n\n\nPlots\n\n\nTo populate pages with plots and data tables, a similar API is used. \nTo add a plot already saved in the plot gatherer :  \n\n\nds.sections[\"x\"].pages[\"z\"].add_element(name = \"plot 1\", \n                                        plot_object = plots.get_plot(\"saved plot\"))\n\n\n\n\nWe just added a plot to the page z in the section x.  \n\n\nIt is worth noting that a name is specified for an element. This name will be used to save a file in the folder dedicated to the section x.\n\n\nHence, two plots cannot have the same name within the same section even though they are displayed on two different pages. Sections isolate completely elements because files are are stored in different folders while pages divide elements only in the HTML output\n.  \n\n\nData Tables\n\n\nTo add a data table, the following method should be used :\n\n\nds.sections[\"x\"].pages[\"z\"].add_element(name = \"pivot table\")\nds.sections[\"x\"].pages[\"z\"].elements[\"pivot table\"].add_table(df2)\n\n\n\n\nCurrently, to add a data table, a second line is necessary. df2 is a Pandas.Dataframe object. \n\n\nPage Layout\n\n\nI users wish to change how plots and data tables are displayed on a page, they can modify the layout thanks to this command :  \n\n\nds.sections[\"x\"].pages[\"z\"].layout = [(8, 4), (6,6), (12,), (12,)]\n\n\n\n\nthe layout parameter wait a list of tuples. Each tuple reprensents one line. The length of the tuple is the number of elements on the row.\nAccording to Bootstrap grid system, a line should be equal to twelve. In SuperSight, the default layout is :\n\n\n[(6, 6), (6, 6), (6, 6)]\n  \n\n\nHeadings and Comments\n\n\nTo enrich a plot or a data table, SuperSight allows to add Headings and Comments.\nUsers could specify Headings and Comments within the \nadd_element\n method :  \n\n\nds.sections[\"x\"].pages[\"z\"].add_element(name = \"info\", heading = \"Heading\", \n                                        plot_object = plots.get_plot(\"saved plot\"),  \n                                        comment_below = \"A comment below the element\", \n                                        comment_above = \"A comment above the element\")\n\n\n\n\nUsers could also add comments after an element is added via these methods :  \n\n\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_comment_above(\"A comment below the element\")\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_comment_below(\"A comment above the element\")\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_heading(\"Heading\")\n\n\n\n\nFinally, it is possible to display math in comments using MathJax :  \n\n\ncom = \"\"\"You can also use MathJax : $x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$\"\"\"\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_comment_below(com)\n\n\n\n\nThe mathematical expression is surrounded by \n$\n.\n\n\nThe render method\n\n\nTo generate the output, call the \nrender\n method on the Dashboard object :\n\n\nds.render()\n\n\nCustomization\n\n\nTo customize the template, users can clone the template folder \nhere\n, and make changes in \nindex.html\n or in CSS files. Once the template is customized, call the \nrender method\n specifying the path of the new template folder :\n\n\nds.render(template='customized_template')\n\nHere the complete folder \n'customized_template'\n is in the current directory.",
+            "title": "Usage"
+        },
+        {
+            "location": "/Usage/index.html#usage",
+            "text": "",
+            "title": "Usage"
+        },
+        {
+            "location": "/Usage/index.html#api-usage",
+            "text": "",
+            "title": "API usage"
+        },
+        {
+            "location": "/Usage/index.html#the-plot_gatherer-object",
+            "text": "SuperSight collects plots and, at render time, it saves these in dedicated folders.\nTo make this process easier, SuperSight comes with a Plot_gatherer object :  from supersight import Plots_gatherer\nplots = Plots_gatherer()  Once the user has instanciated this object, he can use it to save plots for later use using the  add_plot  method:  import matplotlib.pyplot as plt\n\ngraph = plt.figure()\nx = np.linspace(0, 10, 30)\ny = np.sin(x)\nplt.plot(x, y, 'o', color='black');\n\nbuf = io.BytesIO()\nplt.savefig(buf, format='svg')\nplots.add_plot(\"first graph\", buf)  The three last lines above are necessary to save the plot. A Plot_gatherer instance behaves like a dictionnary. On the last line our plot is assigned to a name ( \"first graph\" in this case).  Hence two plots cannot have the same name. \nUsers can save as many plots as they want the limitation being the memory.",
+            "title": "The Plot_gatherer object"
+        },
+        {
+            "location": "/Usage/index.html#the-dashboard-object",
+            "text": "",
+            "title": "The Dashboard object"
+        },
+        {
+            "location": "/Usage/index.html#instanciation",
+            "text": "The Dashboard object represents the highest level of the report. It is the container of all other objects.    Other objects are :   Sections which appear in the navbar. They contain pages  Pages which appear in a dropdown when a section is clicked  Elements (plots and data tables) which are displayed on a page according to the Bootstrap grid system.   Below a Dashboard object is instanciated as ds :  from supersight import Dashboard\nds = Dashboard()  Currently, you should instanciate this object without any parameters. In the future, it will be possible to change some default behaviors though. \nNext, some attributes should be changed to get rid of default values. Below is an extract of the module :  self.name = \"New Dashboard\"\nself.title = \"Super Sight is self hostable dashboard to properly report your work\"\nself.display = \"Welcome to <b>Super Sight !</b>\"\nself.display_message = \"\"\"Super Sight generates a multipage dashboard from a Matplotlib \nplots collection. It helps data scientists and business analysts reporting their work in a \nmethodical and structured manner. It is lightweight, hackable, written in Python and you can host \nits static output anywhere (local network, AWS S3 ...).\"\"\"\nself.nav_bar_right_side = \"Custom information here\"\nself.footer = \"&copy; SuperSight 2017  Hence users can do :  ds.name = \"custom name\" \nds.title = \"custom sentence to be used as title\"\nds.display = \"Big Display\"\n...",
+            "title": "Instanciation"
+        },
+        {
+            "location": "/Usage/index.html#sections",
+            "text": "Users will then attach sections to compose the minisite.  Currently, the Home Page is created by default. There is not any way to remove it.  ds.sections[\"Home\"].pages[\"Home\"]  exists by default.    To add sections , the API follows this syntax : ds.add_section(\"Section 1\")  A section can have any name. \nApplying the  add_section  method to a Dashboard instance will create a new section.",
+            "title": "Sections"
+        },
+        {
+            "location": "/Usage/index.html#pages",
+            "text": "To add a page  to a given section, the API is similar : ds.sections[\"x\"].add_page(\"y\")  Here the  add_page  method is used. A page can also have any name.\nTo add a second page to this same section :  ds.sections[\"x\"].add_page(\"z\")  Special Case :  \nUsers can decide to make a single-page section. In this case, SuperSight require to name the page  Page 1 : ds.sections[\"Section 1\"].add_page(\"Page 1\")  In this particular case  \"Page 1\"  is invisible since no dropdown is displayed for this section.",
+            "title": "Pages"
+        },
+        {
+            "location": "/Usage/index.html#plots",
+            "text": "To populate pages with plots and data tables, a similar API is used. \nTo add a plot already saved in the plot gatherer :    ds.sections[\"x\"].pages[\"z\"].add_element(name = \"plot 1\", \n                                        plot_object = plots.get_plot(\"saved plot\"))  We just added a plot to the page z in the section x.    It is worth noting that a name is specified for an element. This name will be used to save a file in the folder dedicated to the section x.  Hence, two plots cannot have the same name within the same section even though they are displayed on two different pages. Sections isolate completely elements because files are are stored in different folders while pages divide elements only in the HTML output .",
+            "title": "Plots"
+        },
+        {
+            "location": "/Usage/index.html#data-tables",
+            "text": "To add a data table, the following method should be used :  ds.sections[\"x\"].pages[\"z\"].add_element(name = \"pivot table\")\nds.sections[\"x\"].pages[\"z\"].elements[\"pivot table\"].add_table(df2)  Currently, to add a data table, a second line is necessary. df2 is a Pandas.Dataframe object.",
+            "title": "Data Tables"
+        },
+        {
+            "location": "/Usage/index.html#page-layout",
+            "text": "I users wish to change how plots and data tables are displayed on a page, they can modify the layout thanks to this command :    ds.sections[\"x\"].pages[\"z\"].layout = [(8, 4), (6,6), (12,), (12,)]  the layout parameter wait a list of tuples. Each tuple reprensents one line. The length of the tuple is the number of elements on the row.\nAccording to Bootstrap grid system, a line should be equal to twelve. In SuperSight, the default layout is :  [(6, 6), (6, 6), (6, 6)]",
+            "title": "Page Layout"
+        },
+        {
+            "location": "/Usage/index.html#headings-and-comments",
+            "text": "To enrich a plot or a data table, SuperSight allows to add Headings and Comments.\nUsers could specify Headings and Comments within the  add_element  method :    ds.sections[\"x\"].pages[\"z\"].add_element(name = \"info\", heading = \"Heading\", \n                                        plot_object = plots.get_plot(\"saved plot\"),  \n                                        comment_below = \"A comment below the element\", \n                                        comment_above = \"A comment above the element\")  Users could also add comments after an element is added via these methods :    ds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_comment_above(\"A comment below the element\")\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_comment_below(\"A comment above the element\")\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_heading(\"Heading\")  Finally, it is possible to display math in comments using MathJax :    com = \"\"\"You can also use MathJax : $x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$\"\"\"\nds.sections[\"x\"].pages[\"z\"].elements[\"info\"].add_comment_below(com)  The mathematical expression is surrounded by  $ .",
+            "title": "Headings and Comments"
+        },
+        {
+            "location": "/Usage/index.html#the-render-method",
+            "text": "To generate the output, call the  render  method on the Dashboard object :  ds.render()",
+            "title": "The render method"
+        },
+        {
+            "location": "/Usage/index.html#customization",
+            "text": "To customize the template, users can clone the template folder  here , and make changes in  index.html  or in CSS files. Once the template is customized, call the  render method  specifying the path of the new template folder :  ds.render(template='customized_template') \nHere the complete folder  'customized_template'  is in the current directory.",
+            "title": "Customization"
+        },
+        {
+            "location": "/Changelog/index.html",
+            "text": "Changelog\n\n\n2017-05-30 : Prepared the field for tests.\n\n2017-05-29 : Added a way to display styled Pandas dataframes. Users can now use df.style.\n\n2017-05-20 : Fix a problem with pip install. The template was not included because include_package_data was not in setup.py.\n\n2017-04-22 : A Documentation is now available.\n\n2017-04-22 : Plots open in modal on click.",
+            "title": "Changelog"
+        },
+        {
+            "location": "/Changelog/index.html#changelog",
+            "text": "2017-05-30 : Prepared the field for tests. \n2017-05-29 : Added a way to display styled Pandas dataframes. Users can now use df.style. \n2017-05-20 : Fix a problem with pip install. The template was not included because include_package_data was not in setup.py. \n2017-04-22 : A Documentation is now available. \n2017-04-22 : Plots open in modal on click.",
+            "title": "Changelog"
+        }
+    ]
+}
