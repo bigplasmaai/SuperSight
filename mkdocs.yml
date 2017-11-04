@@ -5,4 +5,5 @@ pages:
     - Quickstart: Quickstart.md
     - Usage: Usage.md
     - Changelog: Changelog.md
-theme: readthedocs
+theme: cinder
+use_directory_urls: false
