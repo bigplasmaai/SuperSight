@@ -40,10 +40,12 @@ class Dashboard(object):
     """The Dashboard is the main object. It represents the website at the highest level.
     the add_section method will add a section to the navbar of this dashboard."""
     
-    def __init__(self, name = "New Dashboard", directory = ".", noHome = False, HomeName = "Home"):
+    def __init__(self, name = "New Dashboard", directory = ".", outputDirectory="output"
+                 , noHome = False, HomeName = "Home"):
         
         self.name = name
         self.directory = directory
+        self.output_directory= outputDirectory
         self.HomeName = HomeName
         
         self.sections = collections.OrderedDict()
@@ -68,36 +70,45 @@ class Dashboard(object):
         """This method creates the folder tree which will contain the website."""
         
         self.path = path
-        if os.path.exists(os.path.join(self.path, "output", self.name)):
-            shutil.rmtree(os.path.join(self.path, "output", self.name))
+        if os.path.exists(os.path.join(self.path, self.output_directory, self.name)):
+            shutil.rmtree(os.path.join(self.path, self.output_directory, self.name))
         
-        self.path_folders = os.path.join(self.path, "output", self.name, "site", "static")
+        self.path_folders = os.path.join(self.path, self.output_directory, self.name, "site", "static")
+        os.makedirs(self.path_folders)
+
+        self.path_folders = os.path.join(self.path, self.output_directory, self.name, "site", "static", "css")
         os.makedirs(self.path_folders)
         
-        self.path_folders = os.path.join(self.path, "output", self.name, "site", "static", "css")
+        self.path_folders = os.path.join(self.path, self.output_directory, self.name, "site", "static", "js")
         os.makedirs(self.path_folders)
-        
-        self.path_folders = os.path.join(self.path, "output", self.name, "site", "static", "js")
+
+        self.path_folders = os.path.join(self.path, self.output_directory, self.name, "site", "static", "img")
         os.makedirs(self.path_folders)
         
         for key in self.sections:
-            self.path_folders = os.path.join(self.path, "output", self.name, "site", key)
+            self.path_folders = os.path.join(self.path, self.output_directory, self.name, "site", key)
             os.makedirs(self.path_folders)
             
     def __copy_static(self, template, output_path):
-        """This method takes the files in css and js folders of the template and copy to final folders"""
+        """This method takes the files in css, js, and img folders of the template and copy to final folders"""
         
         self.path_static = os.path.join(template, "static", "css")
         for file in os.listdir(self.path_static):
             print(file)
             shutil.copyfile(os.path.join(template, "static", "css", file), 
-                            os.path.join(output_path, "output", self.name, "site", "static", "css", file))
+                            os.path.join(output_path, self.output_directory, self.name, "site", "static", "css", file))
             
         self.path_static = os.path.join(template, "static", "js")
         for file in os.listdir(self.path_static):
             print(file)
             shutil.copyfile(os.path.join(template, "static", "js", file), 
-                            os.path.join(output_path, "output", self.name, "site", "static", "js", file))
+                            os.path.join(output_path, self.output_directory, self.name, "site", "static", "js", file))
+
+        self.path_static = os.path.join(template, "static", "img")
+        for file in os.listdir(self.path_static):
+            print(file)
+            shutil.copyfile(os.path.join(template, "static", "img", file),
+                            os.path.join(output_path, self.output_directory, self.name, "site", "static", "img", file))
             
     def __create_lists_for_nav_bar(self):
         """This method is called by __create_template_vars_index.
@@ -152,7 +163,7 @@ class Dashboard(object):
             buf_temp = self.sections[section].pages[page].elements[key].plot_object
             if buf_temp is not None :
 
-                plot_path = os.path.join(output_path, "output", self.name, "site", section, key + ".svg")
+                plot_path = os.path.join(output_path, self.output_directory, self.name, "site", section, key + ".svg")
                 
                 
                 try :
@@ -328,7 +339,7 @@ class Dashboard(object):
         # create and save the html file
         
         html_out = self.template_file.render(template_vars)
-        self.output = os.path.join(output_path, "output", self.name, "site", section)
+        self.output = os.path.join(output_path, self.output_directory, self.name, "site", section)
         mon_fichier2 = open(os.path.join(self.output, page + '.html'), "w")
         mon_fichier2.write(html_out)
         mon_fichier2.close()
@@ -341,7 +352,7 @@ class Dashboard(object):
         # create and save the html file
         
         html_out = self.template_file.render(template_vars)
-        self.output_index = os.path.join(self.output_path, 'output', self.name)
+        self.output_index = os.path.join(self.output_path, self.output_directory, self.name)
         mon_fichier2 = open(os.path.join(self.output_index,'index.html'), "w")
         mon_fichier2.write(html_out)
         mon_fichier2.close()
